@@ -1,33 +1,35 @@
-<form [formGroup]="searchForm" (submit)="searchBooks()">
+<form role="search" [formGroup]="searchForm" (submit)="searchBooks()">
   <mat-form-field floatLabel="never">
     <input
       autoFocus
       matInput
+      aria-label="Search for books to add to your reading list"
+      aria-atomic="true"
       type="search"
       placeholder="Search for books to add to your reading list"
       formControlName="term"
     />
-    <button mat-icon-button matSuffix>
+    <button mat-icon-button matSuffix [attr.aria-label]="'search submit'" role="button">
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </form>
 
-<ng-container *ngIf="searchTerm; else empty">
-  <div class="book-grid">
-    <div class="book" data-testing="book-item" *ngFor="let b of books">
-      <div class="book--title">
+<ng-container *ngIf="(getAllBooks$ | async).length > 0; else empty">
+  <div aria-label="Search Output" aria-live="polite" role="book-grid" class="book-grid">
+    <div class="book" data-testing="book-item" *ngFor="let b of getAllBooks$ |  async;trackBy: trackByFn">
+      <div role="heading"  tabindex="0" class="book--title">
         {{ b.title }}
       </div>
-      <div class="book--content">
+      <div class="book--content" tabindex="0">
         <div class="book--content--cover">
-          <img src="{{ b.coverUrl }}" />
+          <img src="{{ b.coverUrl }}" alt="Cover image"/>
         </div>
         <div class="book--content--info">
           <div><strong>Author:</strong> {{ b.authors.join(',') }}</div>
           <div><strong>Publisher:</strong> {{ b.publisher }}</div>
           <div>
-            <strong>Published:</strong> {{ formatDate(b.publishedDate) }}
+            <strong>Published:</strong> {{  b.publishedDate | date: 'MM/dd/yyyy'  }}
           </div>
           <p [innerHTML]="b.description"></p>
           <div>
@@ -36,6 +38,8 @@
               color="primary"
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
+              role="button"
+              [attr.aria-label]= "'Want to Read ' + b.title + ' from reading list'"
             >
               Want to Read
             </button>
@@ -46,11 +50,9 @@
   </div>
 </ng-container>
 <ng-template #empty>
-  <div class="empty">
+  <div tabindex="0" class="empty">
     <p>
-      Try searching for a topic, for example "<a (click)="searchExample()"
-        >JavaScript</a
-      >".
+      Try searching for a topic, for example "<a role="link" (click)="searchExample()">JavaScript</a>".
     </p>
   </div>
 </ng-template>
