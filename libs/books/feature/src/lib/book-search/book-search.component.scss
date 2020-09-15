@@ -68,5 +68,21 @@ form {
   justify-content: center;
   min-height: 50vh;
   font-size: 1.5rem;
-  color: $gray40;
+  color: $gray60;
+}
+
+@media (max-width: 576px) {
+  .book-grid {
+    grid-template-columns: 100%;
+    .book--content {
+      flex-direction: column;
+      .book--content--cover {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .mat-flat-button {
+        width: 100%;
+      }
+    }
+  }
 }

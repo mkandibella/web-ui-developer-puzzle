@@ -1,13 +1,13 @@
 <mat-drawer-container class="app-container" [hasBackdrop]="true">
   <mat-drawer-content>
     <header class="header">
-      <div class="header--content">
+      <div tabindex="0" class="header--content">
         <h1>okreads</h1>
         <div>
           <button
             data-testing="toggle-reading-list"
             mat-button
-            (click)="drawer.toggle()"
+            (click)="drawer.toggle()" [attr.aria-label]="'Reading List'"
           >
             Reading List
             <tmo-total-count></tmo-total-count>
@@ -20,14 +20,14 @@
     </main>
   </mat-drawer-content>
   <mat-drawer #drawer mode="over" position="end">
-    <div class="reading-list-container" data-testing="reading-list-container">
-      <h2>
+    <div tabindex="0" class="reading-list-container" data-testing="reading-list-container">
+      <h2 role="heading">
         My Reading List
-        <button mat-icon-button (click)="drawer.close()">
+        <button mat-icon-button (click)="drawer.close()" role="button" [attr.aria-label]="'close'" >
           <mat-icon>close</mat-icon>
         </button>
       </h2>
-      <div class="reading-list-content">
+      <div aria-label="Reading list Items" aria-label="Cart items" aria-live="polite" role="reading-list"  class="reading-list-content">
         <tmo-reading-list></tmo-reading-list>
       </div>
     </div>

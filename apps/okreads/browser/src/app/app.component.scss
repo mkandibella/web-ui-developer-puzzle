@@ -19,6 +19,7 @@ h1 {
   padding: $spacing-3xs $spacing-xs;
 
   button {
+    background-color: $pink-dark;
     padding: 0 $spacing-xs;
   }
 }
@@ -64,4 +65,10 @@ main {
 
 .reading-list-content {
   padding: $spacing-xxs;
+}
+
+@media (max-width: 576px) {
+  .reading-list-container {
+    width: 280px;
+  }
 }
